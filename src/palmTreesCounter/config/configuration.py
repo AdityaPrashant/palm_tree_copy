@@ -1,6 +1,7 @@
+import os
 from palmTreesCounter.constants import *
 from palmTreesCounter.utils.common import read_yaml, create_directories
-from palmTreesCounter.entity.config_entity import (BaseModelConfig, DataIngestionConfig)
+from palmTreesCounter.entity.config_entity import (BaseModelConfig, DataIngestionConfig, TrainingConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -44,7 +45,7 @@ class ConfigurationManager:
     
 
     def get_base_model_config(self) -> BaseModelConfig:
-        config = self.config.prepare_base_model
+        config = self.config.base_model
         
         create_directories([config.root_dir])
 
@@ -59,3 +60,26 @@ class ConfigurationManager:
     
 
     
+    def get_training_config(self) -> TrainingConfig:
+        training = self.config.training
+        base_model = self.config.base_model
+        params = self.params
+        training_data = os.path.join(self.config.data_ingestion.unzip_dir, "Palm-Counting-349images")
+        create_directories([
+            Path(training.root_dir)
+        ])
+
+        training_config = TrainingConfig(
+            root_dir=Path(training.root_dir),
+            trained_model_path=Path(training.trained_model_path),
+            base_model_path=Path(base_model.base_model_path),
+            training_data=Path(training_data),
+            params_epochs=params.EPOCHS,
+            params_batch_size=params.BATCH_SIZE,
+            params_image_size=params.IMAGE_SIZE,
+            params_classes=params.NUM_CLASSES,
+            mlflow_uri="https://dagshub.com/franklinosei/palm-trees-counter.mlflow",
+            all_params=self.params
+        )
+
+        return training_config

@@ -6,3 +6,31 @@ stages:
       - config/config.yaml
     outs:
       - artifacts/data_ingestion/Palm-Counting-349images
+  
+  get_base_model:
+    cmd: python src/palmTreesCounter/pipeline/stage_02_get_base_model.py
+    deps:
+      - src/palmTreesCounter/pipeline/stage_02_get_base_model.py
+      - config/config.yaml
+    params:
+      - CLASSES
+      - WEIGHTS
+    outs:
+      - artifacts/base_model
+
+  training:
+    cmd: python src/palmTreesCounter/pipeline/stage_03_model_trainer.py
+    deps:
+      - src/palmTreesCounter/pipeline/stage_03_model_trainer.py
+      - config/config.yaml
+      - artifacts/data_ingestion/Palm-Counting-349images
+      - artifacts/base_model
+    params:
+      - IMAGE_SIZE
+      - EPOCHS
+      - BATCH_SIZE
+      - CLASSES
+      - LEARNING_RATE
+      - NUM_CLASSES
+    outs:
+      - artifacts/training/model.pth
