@@ -12,6 +12,5 @@ This project focuses on detecting and counting palm trees in images using deep l
 - **Object Detection**: Detects and counts palm trees in images using a fine-tuned Faster R-CNN model.
 - **Model Performance Metrics**: Calculates Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) to evaluate counting accuracy.
 - **Image Preprocessing**: Automatically resizes images to 512x512 and normalizes bounding box coordinates.
-- **Visualization**: Displays annotated images with bounding boxes and class labels.
 - **API Integration**: Serves the model via a FastAPI application.
 - **MLOps Integration**: Uses Docker for containerization and MLflow for experiment tracking and model management.
