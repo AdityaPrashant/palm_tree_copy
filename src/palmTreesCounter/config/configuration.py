@@ -1,17 +1,8 @@
 from palmTreesCounter.constants import *
 from palmTreesCounter.utils.common import read_yaml, create_directories
-from palmTreesCounter.entity.config_entity import (DataIngestionConfig)
+from palmTreesCounter.entity.config_entity import (BaseModelConfig, DataIngestionConfig)
 
 class ConfigurationManager:
-    """
-    Class to manage the configuration of the application.
-
-    It reads configuration parameters from YAML files and provides methods to access them.
-
-    Attributes:
-        config (dict): Dictionary containing configuration parameters.
-        params (dict): Dictionary containing model parameters.
-    """
     def __init__(
         self,
         config_filepath = CONFIG_FILE_PATH,
@@ -29,6 +20,7 @@ class ConfigurationManager:
         self.params = read_yaml(params_filepath)
 
         create_directories([self.config.artifacts_root])
+
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         """
@@ -49,3 +41,21 @@ class ConfigurationManager:
         )
 
         return data_ingestion_config
+    
+
+    def get_base_model_config(self) -> BaseModelConfig:
+        config = self.config.prepare_base_model
+        
+        create_directories([config.root_dir])
+
+        base_model_config = BaseModelConfig(
+            root_dir=Path(config.root_dir),
+            base_model_path=Path(config.base_model_path),
+            params_weights=self.params.WEIGHTS,
+            params_classes=self.params.CLASSES
+        )
+
+        return base_model_config
+    
+
+    

@@ -4,3 +4,7 @@ data_ingestion:
   root_dir: artifacts/data_ingestion
   dataset_identifier: riotulab/aerial-images-of-palm-trees
   unzip_dir: artifacts/data_ingestion
+
+prepare_base_model:
+  root_dir: artifacts/base_model
+  base_model_path: artifacts/base_model/base_model.pth
