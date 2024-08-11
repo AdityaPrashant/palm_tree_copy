@@ -22,7 +22,7 @@ class Training:
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     def get_base_model(self):
-        model = torchvision.models.detection.fasterrcnn_resnet50_fpn()
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights="DEFAULT")
         num_classes = self.config.params_classes
         in_features = model.roi_heads.box_predictor.cls_score.in_features
         model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
