@@ -96,8 +96,8 @@ class Training:
                 mlflow.log_metrics({'train_loss': avg_train_loss}, step=epoch+1)
                 mlflow.log_params(self.config.all_params)
 
-            self.save_model(self.model, self.config.trained_model_path)
             mlflow.pytorch.log_model(self.model, "model", registered_model_name="FastRCNNPredictor")
+            self.save_model(self.model, self.config.trained_model_path)
 
 
     def validate_model(self):
@@ -125,7 +125,7 @@ class Training:
 
 
     @staticmethod
-    def save_model(path: Path, model: nn.Module):
+    def save_model(model: nn.Module, path: Path):
         torch.save(model.state_dict(), path)
 
     
