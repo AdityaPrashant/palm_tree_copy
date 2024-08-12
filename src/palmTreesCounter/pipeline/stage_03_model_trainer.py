@@ -1,5 +1,5 @@
 from palmTreesCounter.config.configuration import ConfigurationManager
-from palmTreesCounter.components.model_trainer import Training
+from palmTreesCounter.core.model_trainer import Training
 from palmTreesCounter import logger
 
 

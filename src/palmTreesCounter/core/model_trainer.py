@@ -1,14 +1,14 @@
 from pathlib import Path
 from palmTreesCounter import logger
 import mlflow
-from palmTreesCounter.entity.config_entity import TrainingConfig
+from palmTreesCounter.definitions.config_entity import TrainingConfig
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torch import nn
 import torch
 import torchvision.transforms as T
 from torch.utils.data import DataLoader
-from palmTreesCounter.entity.palm_tree_dataset import PalmTreeDataset
+from palmTreesCounter.definitions.palm_tree_dataset import PalmTreeDataset
 import os
 import pandas as pd
 from tqdm import tqdm
@@ -51,8 +51,8 @@ class Training:
         test_dataset = PalmTreeDataset(test_df, test_img_dir, transforms=transforms, train=False, target_size=(self.config.params_image_size, self.config.params_image_size))
         
         # DataLoaders
-        train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, num_workers=4, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
-        test_loader = DataLoader(test_dataset, batch_size=self.config.params_batch_size, num_workers=4, shuffle=False, collate_fn=lambda x: tuple(zip(*x)))
+        train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
+        test_loader = DataLoader(test_dataset, batch_size=self.config.params_batch_size, shuffle=False, collate_fn=lambda x: tuple(zip(*x)))
         
         # Save the data loaders
         self.train_loader = train_loader

@@ -2,13 +2,13 @@ import os
 import mlflow
 from torch.utils.data import DataLoader
 import pandas as pd
-from palmTreesCounter.entity.config_entity import EvaluationConfig
+from palmTreesCounter.definitions.config_entity import EvaluationConfig
 import torchvision
 import torch
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from tqdm import tqdm
 from palmTreesCounter import logger
-from palmTreesCounter.entity.palm_tree_dataset import PalmTreeDataset
+from palmTreesCounter.definitions.palm_tree_dataset import PalmTreeDataset
 from palmTreesCounter.utils.metrics import compute_metrics
 import torchvision.transforms as T
 

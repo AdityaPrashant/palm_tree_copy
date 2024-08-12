@@ -1,7 +1,7 @@
 import os
 from palmTreesCounter.constants import *
 from palmTreesCounter.utils.common import read_yaml, create_directories
-from palmTreesCounter.entity.config_entity import (BaseModelConfig, DataIngestionConfig, EvaluationConfig, TrainingConfig)
+from palmTreesCounter.definitions.config_entity import (BaseModelConfig, DataIngestionConfig, EvaluationConfig, TrainingConfig)
 
 class ConfigurationManager:
     def __init__(

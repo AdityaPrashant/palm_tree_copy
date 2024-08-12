@@ -1,7 +1,5 @@
-import os
-import zipfile
 from palmTreesCounter import logger
-from palmTreesCounter.entity.config_entity import DataIngestionConfig
+from palmTreesCounter.definitions.config_entity import DataIngestionConfig
 from palmTreesCounter.utils.common import create_directories
 import kaggle
 

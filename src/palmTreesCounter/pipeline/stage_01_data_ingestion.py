@@ -1,5 +1,5 @@
 from palmTreesCounter.config.configuration import ConfigurationManager
-from palmTreesCounter.components.data_ingestion import DataIngestion
+from palmTreesCounter.core.data_ingestion import DataIngestion
 from palmTreesCounter import logger
 
 

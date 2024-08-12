@@ -1,5 +1,5 @@
 from palmTreesCounter.config.configuration import ConfigurationManager
-from palmTreesCounter.components.get_base_model import BaseModel
+from palmTreesCounter.core.get_base_model import BaseModel
 from palmTreesCounter import logger
 
 

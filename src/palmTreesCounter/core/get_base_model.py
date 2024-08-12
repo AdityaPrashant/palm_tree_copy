@@ -1,5 +1,5 @@
 from pathlib import Path
-from palmTreesCounter.entity.config_entity import BaseModelConfig
+from palmTreesCounter.definitions.config_entity import BaseModelConfig
 import torch
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
