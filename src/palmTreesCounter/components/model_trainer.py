@@ -29,7 +29,7 @@ class Training:
         model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
 
         # Load the pretrained model
-        model.load_state_dict(torch.load(self.config.base_model_path, map_location=self.device))
+        model.load_state_dict(torch.load(self.config.base_model_path, map_location=self.device, weights_only=True))
         
         self.model = model
     
