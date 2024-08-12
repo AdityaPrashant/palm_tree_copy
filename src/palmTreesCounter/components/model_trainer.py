@@ -13,6 +13,7 @@ import os
 import pandas as pd
 from tqdm import tqdm
 from palmTreesCounter.utils.metrics import compute_metrics
+from sklearn.model_selection import train_test_split
 
 
 
@@ -38,37 +39,37 @@ class Training:
             T.ToTensor(),                     
             T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
-    
 
     def get_data_loaders(self):
         transforms = self.get_transforms()
-        train_df = pd.read_csv(os.path.join(self.config.training_data, "train_labels.csv"))
-        test_df = pd.read_csv(os.path.join(self.config.training_data, "test_labels.csv"))
-        train_img_dir = os.path.join(self.config.training_data, "train") 
-        test_img_dir = os.path.join(self.config.training_data, "test") 
+        df = pd.read_csv(os.path.join(self.config.training_data, "train_labels.csv"))
+        img_dir = os.path.join(self.config.training_data, "train") 
 
+        # Split the data into training and testing sets
+        train_df, valid_df = train_test_split(df, test_size=0.3, random_state=42)
+        
         # Load the datasets
-        train_dataset = PalmTreeDataset(train_df, train_img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
-        test_dataset = PalmTreeDataset(test_df, test_img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
+        train_dataset = PalmTreeDataset(train_df, img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
+        valid_dataset = PalmTreeDataset(valid_df, img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
         
         # DataLoaders
-        train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, num_workers=4, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
-        test_loader = DataLoader(test_dataset, batch_size=self.config.params_batch_size, num_workers=4, shuffle=False, collate_fn=lambda x: tuple(zip(*x)))
+        train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
+        valid_loader = DataLoader(valid_dataset, batch_size=self.config.params_batch_size, shuffle=False, collate_fn=lambda x: tuple(zip(*x)))
         
         # Save the data loaders
         self.train_loader = train_loader
-        self.test_loader = test_loader
+        self.valid_loader = valid_loader
     
 
     def train(self):
         mlflow.set_registry_uri(self.config.mlflow_uri)
         mlflow.set_experiment('palm_tree_counting')
         
-        with mlflow.start_run():
+        with mlflow.start_run(run_name="Training"):
             self.model.to(self.device)
 
             optimizer = torch.optim.SGD(self.model.parameters(), lr=self.config.learning_rate, momentum=0.9, weight_decay=0.0005)
-            lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
+            lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=2, gamma=0.1)
         
             for epoch in range(self.config.params_epochs):
                 self.model.train()
@@ -96,7 +97,7 @@ class Training:
                 mlflow.log_metrics({'train_loss': avg_train_loss}, step=epoch+1)
                 mlflow.log_params(self.config.all_params)
 
-            mlflow.pytorch.log_model(self.model, "model", registered_model_name="FastRCNNPredictor")
+            mlflow.pytorch.log_model(self.model, "model", registered_model_name="PalmTreeCounter (FastRCNNPredictor)")
             self.save_model(self.model, self.config.trained_model_path)
 
 
@@ -106,7 +107,7 @@ class Training:
         all_targets = []
         
         with torch.no_grad():
-            for imgs, targets in tqdm(self.test_loader, desc="Validation", leave=False):
+            for imgs, targets in tqdm(self.valid_loader, desc="Validation", leave=False):
                 imgs = [img.to(self.device) for img in imgs]
                 targets = [{k: v.to(self.device) for k, v in t.items()} for t in targets]
                 

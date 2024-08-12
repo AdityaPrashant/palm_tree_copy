@@ -13,9 +13,9 @@ class BaseModelTrainingPipeline:
 
     def main(self):
         config = ConfigurationManager()
-        prepare_base_model_config = config.get_base_model_config()
-        prepare_base_model = BaseModel(config=prepare_base_model_config)
-        prepare_base_model.get_base_model()
+        configure_base_model_config = config.get_base_model_config()
+        configure_base_model = BaseModel(config=configure_base_model_config)
+        configure_base_model.get_base_model()
         
 
 if __name__ == '__main__':

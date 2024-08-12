@@ -13,3 +13,4 @@ base_model:
 training:
   root_dir: artifacts/training
   trained_model_path: artifacts/training/model.pth
+  mlflow_uri: https://dagshub.com/franklinosei/palm-trees-counter.mlflow
