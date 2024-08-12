@@ -26,7 +26,7 @@ class Evaluation:
 
     @staticmethod
     def load_model(self):
-        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights="DEFAULT")
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None)
         num_classes = self.config.params_classes
         in_features = model.roi_heads.box_predictor.cls_score.in_features
         model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
@@ -52,6 +52,7 @@ class Evaluation:
 
     def evaluation(self):
         self.model = self.load_model(self)
+        self.model.to(self.device)
         self.model.eval()
         all_predictions = []
         all_targets = []
