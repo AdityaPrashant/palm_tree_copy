@@ -16,11 +16,12 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install pip requirements
-RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 # Download the model
-RUN python -c "import gdown; gdown.download('https://drive.google.com/uc?id=1BUQYSwNvkHX5WmVfBN-3L9wgHuLxpe4L', '/app/model/model.pth', quiet=False)"
+RUN python3 -c "import gdown; gdown.download('https://drive.google.com/uc?id=1BUQYSwNvkHX5WmVfBN-3L9wgHuLxpe4L', '/app/model/model.pth', quiet=False)"
+
+# Install pip requirements
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 # Expose the port that the FastAPI server will run on
 EXPOSE 8000
