@@ -79,7 +79,8 @@ class ConfigurationManager:
             params_image_size=params.IMAGE_SIZE,
             params_classes=params.NUM_CLASSES,
             mlflow_uri="https://dagshub.com/franklinosei/palm-trees-counter.mlflow",
-            all_params=self.params
+            all_params=self.params,
+            learning_rate=params.LEARNING_RATE,
         )
 
         return training_config

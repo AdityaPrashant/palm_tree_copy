@@ -67,7 +67,7 @@ class Training:
         with mlflow.start_run():
             self.model.to(self.device)
 
-            optimizer = torch.optim.SGD(self.model.parameters(), lr=0.005, momentum=0.9, weight_decay=0.0005)
+            optimizer = torch.optim.SGD(self.model.parameters(), lr=self.config.learning_rate, momentum=0.9, weight_decay=0.0005)
             lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
         
             for epoch in range(self.config.params_epochs):

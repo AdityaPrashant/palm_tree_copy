@@ -28,4 +28,5 @@ class TrainingConfig:
     params_classes: int
     mlflow_uri: str
     all_params: dict
+    learning_rate: float
 
