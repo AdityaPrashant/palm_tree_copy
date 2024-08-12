@@ -28,5 +28,5 @@ RUN pip3 install --no-cache-dir -r /app/requirements.txt
 # Expose the port that the FastAPI server will run on
 EXPOSE 8000
 
-# Command to run the FastAPI server
+# run the FastAPI server
 CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "${PORT:-8000}"]
