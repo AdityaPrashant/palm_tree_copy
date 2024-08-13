@@ -138,7 +138,7 @@ If you prefer to train the model directly without running the pipeline with dvc,
 
 ### API
 
-The FastAPI-based API is containerized using Docker for ease of deployment. It provides the following endpoints:
+The FastAPI-based API is containerized using Docker and configured to run on GPU-enable platforms for ease of deployment. It provides the following endpoints:
 
 - **`/predict`**: Accepts an image and returns the predicted number of palm trees.
 - **`/health`**: Checks the server health
