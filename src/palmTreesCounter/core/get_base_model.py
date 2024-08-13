@@ -19,7 +19,7 @@ class BaseModel:
     
     @staticmethod
     def get_model(num_classes):
-        # Load the pre-trained Faster R-CNN model with ResNet-50 FPN backbone
+        # Load the pre-trained FasterR-CNN model
         model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights='DEFAULT')
         
         # Modify the head of the model to match the number of classes

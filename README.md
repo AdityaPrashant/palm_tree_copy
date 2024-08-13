@@ -84,8 +84,8 @@ The model was evaluated using the [test dataset](https://www.kaggle.com/datasets
 
 The model achieved the following performance on the test dataset:
 
-- **Mean Absolute Error (MAE)**: *X.XX*
-- **Root Mean Squared Error (RMSE)**: *X.XX*
+- **Mean Absolute Error (MAE)**: *5.47*
+- **Root Mean Squared Error (RMSE)**: *6.98*
 
 These results demonstrate the model's ability to accurately count palm trees in aerial images of palm tree farms.
 

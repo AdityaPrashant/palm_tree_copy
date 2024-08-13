@@ -58,9 +58,9 @@ class Evaluation:
         all_targets = []
         
         with torch.no_grad():
-            for imgs, targets in tqdm(self.test_loader, desc="Validation", leave=False):
+            for imgs, targets in tqdm(self.test_loader, desc="Evaluation", leave=False):
                 imgs = [img.to(self.device) for img in imgs]
-                targets = [{k: v.to(self.device) for k, v in t.items()} for t in targets]
+                targets = [t.to(self.device) for t in targets]
                 
                 # Get the predictions from the model
                 predictions = self.model(imgs)

@@ -20,10 +20,10 @@ class DataIngestionTrainingPipeline:
 
 if __name__ == '__main__':
     try:
-        logger.info(f">>>>>> Stage - {STAGE_NAME} started <<<<<<")
+        logger.info(f">>>>>> Stage - {STAGE_NAME} Started <<<<<<")
         objective = DataIngestionTrainingPipeline()
         objective.main()
-        logger.info(f">>>>>> Stage {STAGE_NAME} completed <<<<<<\n\n")
+        logger.info(f">>>>>> Stage {STAGE_NAME} Completed <<<<<<\n\n")
     except Exception as e:
         logger.exception(e)
         raise e
