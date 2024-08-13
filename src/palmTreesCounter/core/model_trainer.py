@@ -47,8 +47,8 @@ class Training:
         test_img_dir = os.path.join(self.config.training_data, "test") 
 
         # Load the datasets
-        train_dataset = PalmTreeDataset(train_df, train_img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
-        test_dataset = PalmTreeDataset(test_df, test_img_dir, transforms=transforms, train=False, target_size=(self.config.params_image_size, self.config.params_image_size))
+        train_dataset = PalmTreeDataset(train_df[0:100], train_img_dir, transforms=transforms, target_size=(self.config.params_image_size, self.config.params_image_size))
+        test_dataset = PalmTreeDataset(test_df[0:100], test_img_dir, transforms=transforms, train=False, target_size=(self.config.params_image_size, self.config.params_image_size))
         
         # DataLoaders
         train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
