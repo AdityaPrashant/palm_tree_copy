@@ -26,7 +26,7 @@ RUN python3 -c "import gdown; gdown.download('https://drive.google.com/uc?id=1BU
 RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 # Expose the port that the FastAPI server will run on
-EXPOSE 8000
+EXPOSE 10000
 
 # run the FastAPI server
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", 80]
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", 10000]

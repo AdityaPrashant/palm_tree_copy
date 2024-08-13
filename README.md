@@ -22,6 +22,7 @@ This project focuses on detecting and counting palm trees in images using deep l
 - **Object Detection**: Detects and counts palm trees in images using a fine-tuned Faster R-CNN model.
 - **Model Performance Metrics**: Calculates Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) to evaluate counting accuracy.
 - **Image Preprocessing**: Automatically resizes images to 512x512 and normalizes bounding box coordinates.
+- **Visualization**: Displays annotated images with bounding boxes and class labels.
 - **API Integration**: Serves the model via a FastAPI application.
 - **MLOps Integration**: Uses Docker for containerization and MLflow for experiment tracking and model management.
 
@@ -49,7 +50,7 @@ This project includes an automated process to download the dataset from Kaggle.
 
 1. **Prepare Kaggle API Token**:
     - Obtain the Kaggle API token by following the instructions on the [Kaggle API documentation](https://github.com/Kaggle/kaggle-api).
-    - Place the `kaggle.json` file in the appropriate directory:
+    - Copy the `kaggle.json` file to the appropriate directory:
         - **Windows**: `C:\Users\<YourUsername>\.kaggle\kaggle.json`
         - **Unix/Mac**: `~/.kaggle/kaggle.json`
 2. **Configure Dataset Identifier**:
@@ -58,16 +59,17 @@ This project includes an automated process to download the dataset from Kaggle.
 
 ## Model Architecture
 
-The model used in this project is `fasterrcnn_resnet50_fpn`, a state-of-the-art object detection model that can detect multiple instances of palm trees in a single image. The model is fine-tuned on custom data to adapt to the specific task of palm tree counting.
+The model used in this project is `fasterrcnn_resnet50_fpn`, a state-of-the-art object detection model that can detect multiple instances of objects in a single image. The model is fine-tuned on the [aerial-images-of-palm-trees](https://www.kaggle.com/datasets/riotulab/aerial-images-of-palm-trees/data) dataset to adapt to the specific task of palm tree counting.
 
 ## Training
 
 The model was trained using the following configuration:
 
 - **Optimizer**: SGD
-- **Learning Rate**: 0.001
+- **Learning Rate**: 0.01
 - **Batch Size**: 16
-- **Epochs**: 5
+- **Epochs**: 3
+- **Image Size**: 320
 
 The training process was tracked and logged using MLflow. The public MLflow dashboard for the results can be accessed via this [link](https://dagshub.com/franklinosei/palm-trees-counter.mlflow).
 
@@ -84,8 +86,8 @@ The model was evaluated using the [test dataset](https://www.kaggle.com/datasets
 
 The model achieved the following performance on the test dataset:
 
-- **Mean Absolute Error (MAE)**: *5.47*
-- **Root Mean Squared Error (RMSE)**: *6.98*
+- **Mean Absolute Error (MAE)**: ***5.47***
+- **Root Mean Squared Error (RMSE)**: ***6.98***
 
 These results demonstrate the model's ability to accurately count palm trees in aerial images of palm tree farms.
 
@@ -154,16 +156,16 @@ To run the API using Docker, follow these steps:
     After building the image, run the container with the following command:
     
     ```bash
-    docker run -d -p 8000:8000 palm-tree-counter-api
+    docker run -d -p 10000:10000 palm-tree-counter-api
     ```
     
-    This will start the FastAPI server on `http://localhost:8000`.
+    This will start the FastAPI server on `http://localhost:10000`.
     
 3. **Access the API:**
     
     You can now access the API endpoints:
     
-    - **Prediction Endpoint**: `http://localhost:8000/predict`
-    - **Health Endpoint**: `http://localhost:8000/health`
+    - **Prediction Endpoint**: `http://localhost:10000/predict`
+    - **Health Endpoint**: `http://localhost:10000/health`
     
     The API will serve the model, allowing you to send images and receive the predicted palm tree counts.
