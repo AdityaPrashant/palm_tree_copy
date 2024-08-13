@@ -1,4 +1,4 @@
-from palmTreesCounter.config.configuration import ConfigurationManager
+from palmTreesCounter.configurations.configuration import ConfigurationManager
 from palmTreesCounter.core.model_evaluation import Evaluation
 from palmTreesCounter import logger
 
